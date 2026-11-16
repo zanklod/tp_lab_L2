@@ -1,0 +1,113 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam monochrome true
+
+package "com.example" {
+
+    class Main {
+        - Main()
+        + {static} main(args : String[]) : void
+        - {static} wyswietlMenu() : void
+        - {static} wypiszKsiazki(bibliotekarz : Bibliotekarz) : void
+        - {static} wypiszEgzemplarze(bibliotekarz : Bibliotekarz) : void
+        - {static} wypiszCzytelnikow(bibliotekarz : Bibliotekarz) : void
+    }
+
+    class Bibliotekarz <<Controller, Creator>> {
+        - magazyn : BibliotekaRepository
+        + Bibliotekarz(magazyn : BibliotekaRepository)
+        + dodajKsiazke(idKsiazki : int, tytul : String, imieAutora : String, nazwiskoAutora : String) : void
+        + dodajEgzemplarz(idEgzemplarza : int, idKsiazki : int) : void
+        + dodajCzytelnika(idCzytelnika : int, imieCzytelnika : String, nazwiskoCzytelnika : String) : void
+        + wypozyczEgzemplarz(idEgzemplarza : int, idCzytelnika : int) : void
+        + wypozyczKsiazkePoId(idKsiazki : int, idCzytelnika : int) : void
+        + oddajEgzemplarz(idEgzemplarza : int) : void
+        + czyKsiazkaIstnieje(idKsiazki : int) : boolean
+        + przekazWszystkieKsiazki() : List<Ksiazka>
+        + przekazWszystkieEgzemplarze() : List<Egzemplarz>
+        + przekazWszystkichCzytelnikow() : List<Czytelnik>
+    }
+
+    interface BibliotekaRepository <<Pure Fabrication>> {
+        + dodajCzytelnika(czytelnik : Czytelnik) : void
+        + dodajKsiazke(ksiazka : Ksiazka) : void
+        + dodajEgzemplarz(egzemplarz : Egzemplarz) : void
+        + zaktualizujEgzemplarz(egzemplarz : Egzemplarz) : void
+        + znajdzWolnyEgzemplarzKsiazki(ksiazka : Ksiazka) : Egzemplarz
+        + czyMamyKsiazke(idKsiazki : int) : boolean
+        + czyMamyEgzemplarz(idEgzemplarza : int) : boolean
+        + czyMamyCzytelnika(idCzytelnika : int) : boolean
+        + zwrocKsiazkePoID(idKsiazki : int) : Ksiazka
+        + zwrocEgzemplarzPoID(idEgzemplarza : int) : Egzemplarz
+        + zwrocCzytelnikaPoID(idCzytelnika : int) : Czytelnik
+        + pobierzWszystkieKsiazki() : List<Ksiazka>
+        + pobierzWszystkieEgzemplarze() : List<Egzemplarz>
+        + pobierzWszystkichCzytelnikow() : List<Czytelnik>
+    }
+
+    class BibliotekaRepoArray <<Pure Fabrication>> {
+        - egzemplarze : List<Egzemplarz>
+        - czytelnicy : List<Czytelnik>
+        - ksiazki : List<Ksiazka>
+        + dodajCzytelnika(czytelnik : Czytelnik) : void
+        + dodajKsiazke(ksiazka : Ksiazka) : void
+        + dodajEgzemplarz(egzemplarz : Egzemplarz) : void
+        + zaktualizujEgzemplarz(egzemplarz : Egzemplarz) : void
+        + znajdzWolnyEgzemplarzKsiazki(ksiazka : Ksiazka) : Egzemplarz
+        + czyMamyKsiazke(idKsiazki : int) : boolean
+        + czyMamyEgzemplarz(idEgzemplarza : int) : boolean
+        + czyMamyCzytelnika(idCzytelnika : int) : boolean
+        + zwrocKsiazkePoID(idKsiazki : int) : Ksiazka
+        + zwrocEgzemplarzPoID(idEgzemplarza : int) : Egzemplarz
+        + zwrocCzytelnikaPoID(idCzytelnika : int) : Czytelnik
+        + pobierzWszystkieKsiazki() : List<Ksiazka>
+        + pobierzWszystkieEgzemplarze() : List<Egzemplarz>
+        + pobierzWszystkichCzytelnikow() : List<Czytelnik>
+    }
+
+    class Ksiazka <<Information Expert>> {
+        - idKsiazki : int
+        - tytul : String
+        - imieAutora : String
+        - nazwiskoAutora : String
+        + Ksiazka(idKsiazki : int, tytul : String, imieAutora : String, nazwiskoAutora : String)
+        + getIdKsiazki() : int
+        + getTytul() : String
+        + getImieAutora() : String
+        + getNazwiskoAutora() : String
+    }
+
+    class Czytelnik <<Information Expert>> {
+        - idCzytelnika : int
+        - imieCzytelnika : String
+        - nazwiskoCzytelnika : String
+        + Czytelnik(idCzytelnika : int, imie : String, nazwisko : String)
+        + getIdCzytelnika() : int
+        + getImie() : String
+        + getNazwisko() : String
+    }
+
+    class Egzemplarz <<Information Expert>> {
+        - idEgzemplarza : int
+        - ksiazka : Ksiazka
+        - czytelnik : Czytelnik
+        + Egzemplarz(idEgzemplarza : int, ksiazka : Ksiazka)
+        + wypozycz(nowyCzytelnik : Czytelnik) : void
+        + zwrotEgzemplarza() : void
+        + czyDostepny() : boolean
+        + getIdEgzemplarza() : int
+        + getKsiazka() : Ksiazka
+        + getCzytelnik() : Czytelnik
+    }
+
+    Main ..> Bibliotekarz : deleguje zadania >
+    Main ..> BibliotekaRepoArray : tworzy i wstrzykuje >
+    Bibliotekarz --> "1" BibliotekaRepository : uzywa >
+    BibliotekaRepoArray ..|> BibliotekaRepository : implementuje
+    BibliotekaRepoArray o--> "0..*" Ksiazka : przechowuje
+    BibliotekaRepoArray o--> "0..*" Egzemplarz : przechowuje
+    BibliotekaRepoArray o--> "0..*" Czytelnik : przechowuje
+    Egzemplarz "*" --> "1" Ksiazka : dotyczy tytulu >
+    Egzemplarz "*" --> "0..1" Czytelnik : wypozyczony przez >
+}
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+left to right direction
+skinparam monochrome true
+
+actor "Użytkownik (Bibliotekarz)" as User
+
+rectangle "System Biblioteczny" {
+    usecase "UC1: Dodaj książkę do katalogu" as UC1
+    usecase "UC2: Dodaj egzemplarz książki" as UC2
+    usecase "UC3: Dodaj czytelnika" as UC3
+    usecase "UC4: Wypożycz egzemplarz książki" as UC4
+    usecase "UC5: Zwróć egzemplarz książki" as UC5
+    usecase "UC6: Wyświetl listę obiektów\n(książki / egzemplarze / czytelnicy)" as UC6
+
+    UC1 .> UC2 : <<extend>>\n[gdy tytuł nie istnieje w bazie]
+}
+
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+User --> UC5
+User --> UC6
+@enduml
