@@ -1,36 +1,94 @@
-UC1: Dodaj książkę do katalogu
-Warunki początkowe: Program musi być uruchomiony.
-Scenariusz główny: Użytkownik wybiera opcję 1 z menu, a następnie podaje ID książki, tytuł, imię autora oraz nazwisko autora. Program sprawdza, czy takie ID nie jest już zajęte i czy tytuł nie jest pusty, po czym zapisuje książkę w bazie i wyświetla komunikat o dodaniu książki.
-Scenariusze alternatywne: Jeśli użytkownik jako ID nie poda liczby całkowitej, wyświetli się błąd formatu i program wróci do menu. Jeśli książka o podanym ID jest już w bazie albo tytuł jest pusty, program wyświetli odpowiedni komunikat błędu i nie doda książki.
+=========================================
+UC1
+=========================================
+Nazwa; Dodaj książkę do katalogu
+Identyfikator (ID); UC1
+Aktor; Użytkownik systemu
+Opis; Dodanie nowej książki do katalogu biblioteki na podstawie wprowadzonych danych.
+Warunki wstępne; Program musi być uruchomiony.
+Warunki końcowe; Książka zostaje zapisana w bazie danych, a system wyświetla komunikat o sukcesie.
+Sekwencja akcji; 
+1. Użytkownik wybiera opcję 1 z menu.
+2. Użytkownik podaje ID książki, tytuł, imię autora oraz nazwisko autora.
+3. Program sprawdza, czy ID nie jest już zajęte i czy tytuł nie jest pusty.
+4. Program zapisuje książkę w bazie i wyświetla komunikat o dodaniu książki.
+[Alternatywnie]: Jeśli ID nie jest liczbą całkowitą, wyświetla się błąd formatu i program wraca do menu. Jeśli książka o podanym ID jest już w bazie albo tytuł jest pusty, program wyświetla komunikat błędu i nie dodaje książki.
 
-UC2: Dodaj egzemplarz książki
-Warunki początkowe: Program musi być uruchomiony.
-Scenariusz główny: Użytkownik wybiera opcję 2 z menu, a następnie podaje ID nowego egzemplarza oraz ID książki, której ten egzemplarz dotyczy. Jeśli książka o podanym ID jest już zapisana w bazie, a ID egzemplarza jest wolne, system dodaje nowy egzemplarz (ze statusem wolny) i wyświetla potwierdzenie.
-Scenariusze alternatywne: Jeśli książki o podanym ID nie ma jeszcze w bazie (rozszerzenie <<extend>> do UC1), program informuje o braku tytułu i prosi użytkownika o podanie tytułu, imienia autora oraz nazwiska autora, dodaje książkę, a następnie zapisuje egzemplarz. Jeśli użytkownik jako ID nie poda liczby, pojawi się informacja o błędzie i wyświetli się menu. Jeśli użytkownik poda ID egzemplarza, które już istnieje w bazie (albo zostawi pusty tytuł przy dodawaniu nowej książki), program wyświetli informację o błędzie i nie doda egzemplarza.
+=========================================
+UC2
+=========================================
+Nazwa; Dodaj egzemplarz książki
+Identyfikator (ID); UC2
+Aktor; Użytkownik systemu
+Opis; Dodanie nowego egzemplarza powiązanego z konkretną książką w bazie.
+Warunki wstępne; Program musi być uruchomiony.
+Warunki końcowe; Nowy egzemplarz zostaje zapisany w systemie ze statusem "wolny", wyświetla się potwierdzenie.
+Sekwencja akcji; 
+1. Użytkownik wybiera opcję 2 z menu.
+2. Użytkownik podaje ID nowego egzemplarza oraz ID książki.
+3. Program sprawdza, czy książka o podanym ID istnieje, a ID egzemplarza jest wolne.
+4. System dodaje nowy egzemplarz (ze statusem wolny) i wyświetla potwierdzenie.
+[Alternatywnie - rozszerzenie <<extend>> do UC1]: Jeśli książki nie ma w bazie, program prosi o tytuł, imię i nazwisko autora, dodaje książkę, a następnie zapisuje egzemplarz. Jeśli ID nie jest liczbą, ID egzemplarza już istnieje lub tytuł nowej książki jest pusty, program wyświetla błąd i nie dodaje egzemplarza.
 
-UC3: Dodaj czytelnika
-Warunki początkowe: Program musi być uruchomiony.
-Scenariusz główny: Użytkownik wybiera opcję 3 z menu, a następnie wpisuje ID czytelnika, jego imię oraz nazwisko. Program sprawdza, czy ID jest unikalne oraz czy imię i nazwisko nie są puste, po czym zapisuje czytelnika w bazie i wyświetla potwierdzenie.
-Scenariusze alternatywne: Jeśli ID nie jest liczbą całkowitą, pojawi się błąd formatu i powrót do menu. Jeśli czytelnik o podanym ID już istnieje w bazie albo imię/nazwisko zostało puste, program wyświetli komunikat błędu i nie doda czytelnika.
+=========================================
+UC3
+=========================================
+Nazwa; Dodaj czytelnika
+Identyfikator (ID); UC3
+Aktor; Użytkownik systemu
+Opis; Zarejestrowanie nowego czytelnika w systemie bibliotecznym.
+Warunki wstępne; Program musi być uruchomiony.
+Warunki końcowe; Czytelnik zostaje zapisany w bazie, wyświetlany jest komunikat potwierdzający.
+Sekwencja akcji; 
+1. Użytkownik wybiera opcję 3 z menu.
+2. Użytkownik wpisuje ID czytelnika, jego imię oraz nazwisko.
+3. Program sprawdza, czy ID jest unikalne oraz czy imię i nazwisko nie są puste.
+4. Program zapisuje czytelnika w bazie i wyświetla potwierdzenie.
+[Alternatywnie]: Jeśli ID nie jest liczbą całkowitą, pojawia się błąd formatu i powrót do menu. Jeśli czytelnik o podanym ID już istnieje lub imię/nazwisko jest puste, program wyświetla komunikat błędu i nie dodaje czytelnika.
 
-UC4: Wypożycz egzemplarz książki
-Warunki początkowe: Program musi być uruchomiony, a egzemplarz oraz czytelnik o podanych przez użytkownika ID muszą być wcześniej dodani do bazy
-Scenariusz główny: Użytkownik wybiera opcję 4 z menu, podaje ID egzemplarza, a następnie ID czytelnika. Program sprawdza, czy oba obiekty istnieją i czy egzemplarz nie jest aktualnie wypożyczony, po czym przypisuje czytelnika do egzemplarza i informuje o wypożyczeniu.
-Scenariusze alternatywne: Jeśli któreś ID nie jest liczbą całkowitą albo brakuje podanego ID egzemplarza lub czytelnika w bazie, program informuje o błędzie i nie wypożycza egzemplarza. Jeśli podany egzemplarz jest już obecnie wypożyczony przez kogoś innego, program również wyświetla komunikat o błędzie i blokuje wypożyczenie.
+=========================================
+UC4
+=========================================
+Nazwa; Wypożycz egzemplarz książki
+Identyfikator (ID); UC4
+Aktor; Użytkownik systemu
+Opis; Przypisanie wolnego egzemplarza książki do wybranego czytelnika.
+Warunki wstępne; Program musi być uruchomiony, a egzemplarz oraz czytelnik o podanych ID muszą znajdować się w bazie.
+Warunki końcowe; Egzemplarz zmienia status na wypożyczony i zostaje przypisany do czytelnika; wyświetla się komunikat o wypożyczeniu.
+Sekwencja akcji; 
+1. Użytkownik wybiera opcję 4 z menu.
+2. Użytkownik podaje ID egzemplarza, a następnie ID czytelnika.
+3. Program sprawdza, czy oba obiekty istnieją i czy egzemplarz nie jest aktualnie wypożyczony.
+4. Program przypisuje czytelnika do egzemplarza i informuje o wypożyczeniu.
+[Alternatywnie]: Jeśli któreś ID nie jest liczbą całkowitą, brakuje ID w bazie lub egzemplarz jest już wypożyczony przez kogoś innego, program wyświetla komunikat o błędzie i blokuje wypożyczenie.
 
-UC5: Zwróć egzemplarz książki
-Warunki początkowe: Program musi być uruchomiony, a zwracany egzemplarz musi istnieć w bazie i być aktualnie wypożyczony.
-Scenariusz główny: Użytkownik wybiera opcję 5 z menu i podaje ID zwracanego egzemplarza. Program odnajduje egzemplarz, zwalnia przypisanego do niego czytelnika (ustawia status na wolny) i wyświetla komunikat o zwrocie.
-Scenariusze alternatywne: Jeśli ID nie jest liczbą całkowitą lub w bazie nie ma egzemplarza o takim ID, program wyświetla błąd. Jeśli egzemplarz leży w bibliotece i nie był wypożyczony, program informuje o tym i nie wykonuje zwrotu.
+=========================================
+UC5
+=========================================
+Nazwa; Zwróć egzemplarz książki
+Identyfikator (ID); UC5
+Aktor; Użytkownik systemu
+Opis; Zwrot wypożyczonego wcześniej egzemplarza książki do biblioteki.
+Warunki wstępne; Program musi być uruchomiony, a zwracany egzemplarz musi istnieć w bazie i być aktualnie wypożyczony.
+Warunki końcowe; Egzemplarz odzyskuje status wolny, przypisanie czytelnika zostaje usunięte, wyświetla się komunikat o zwrocie.
+Sekwencja akcji; 
+1. Użytkownik wybiera opcję 5 z menu.
+2. Użytkownik podaje ID zwracanego egzemplarza.
+3. Program odnajduje egzemplarz i zwalnia przypisanego do niego czytelnika (ustawia status na wolny).
+4. Program wyświetla komunikat o zwrocie.
+[Alternatywnie]: Jeśli ID nie jest liczbą całkowitą, brak egzemplarza o takim ID w bazie lub egzemplarz nie był wypożyczony, program wyświetla błąd i nie wykonuje zwrotu.
 
-UC6: Wyświetl listę obiektów (książki / egzemplarze / czytelnicy)
-Warunki początkowe: Program musi być uruchomiony.
-Scenariusz główny: Użytkownik wybiera w menu opcję 6 (wypisz książki), 7 (wypisz egzemplarze) lub 8 (wypisz czytelników). Program pobiera odpowiednią listę z repozytorium i wypisuje w konsoli dane wszystkich zapisanych obiektów danego typu (w przypadku egzemplarzy pokazuje też, czy są wolne, czy wypożyczone i przez kogo).
-Scenariusze alternatywne: Jeśli lista wybranego typu obiektów jest pusta, program wyświetla w konsoli informację o braku zapisanych pozycji (np. Brak ksiazek w systemie.).
-
-Kwestia dodania obsługi bazy danych:
-
-Ponieważ klasa Bibliotekarz nie zalezy od BibliotekaRepoArray, tylko od dowolnej implementacji interfejsu
-BlibliotekaRepository, dzieki temu nie musi wiedziec w jaki sposob metody sa realizowane, wystarczy ze instnieja,
-to umozliwia latwe przejscie na baze danych, wystrczy zaimplementowac interfejs obslugujacy baze danych i w Main 
-przekazac do konstruktora klasy Bibliotekarz instancje nowej implementacji.
+=========================================
+UC6
+=========================================
+Nazwa; Wyświetl listę obiektów (książki / egzemplarze / czytelnicy)
+Identyfikator (ID); UC6
+Aktor; Użytkownik systemu
+Opis; Wypisanie w konsoli danych wszystkich zapisanych obiektów wybranego typu.
+Warunki wstępne; Program musi być uruchomiony.
+Warunki końcowe; Lista obiektów wraz ze statusami (dla egzemplarzy) zostaje wyświetlona w konsoli lub wyświetla się komunikat o braku danych.
+Sekwencja akcji; 
+1. Użytkownik wybiera w menu opcję 6 (książki), 7 (egzemplarze) lub 8 (czytelnicy).
+2. Program pobiera odpowiednią listę z repozytorium.
+3. Program wypisuje w konsoli dane wszystkich zapisanych obiektów danego typu (dla egzemplarzy pokazuje status wolny/wypożyczony i przez kogo).
+[Alternatywnie]: Jeśli lista wybranego typu obiektów jest pusta, program wyświetla w konsoli informację o braku zapisanych pozycji (np. Brak ksiazek w systemie.).
